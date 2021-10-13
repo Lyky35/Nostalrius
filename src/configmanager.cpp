@@ -88,6 +88,9 @@ bool ConfigManager::load()
 	string[MOTD] = getGlobalString(L, "motd", "");
 	string[WORLD_TYPE] = getGlobalString(L, "worldType", "pvp");
 
+	integer[CLIENT_VERSION_TO_PLAY] = getGlobalNumber(L, "clientVersionToPlay", 1); //default tibia
+	string[CLIENT_VERSION_TO_PLAY_TEXT] = getGlobalString(L, "clientVersionToPlayText", ""); //default tibia
+
 	integer[MAX_PLAYERS] = getGlobalNumber(L, "maxPlayers");
 	integer[PZ_LOCKED] = getGlobalNumber(L, "pzLocked", 60000);
 	integer[DEFAULT_DESPAWNRANGE] = getGlobalNumber(L, "deSpawnRange", 2);
