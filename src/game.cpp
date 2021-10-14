@@ -2196,6 +2196,21 @@ void Game::playerSeekInContainer(uint32_t playerId, uint8_t containerId, uint16_
 	player->sendContainer(containerId, container, container->hasParent(), index);
 }
 
+
+void Game::playerVersionToPlay(uint32_t playerId, uint16_t versionToPlay)
+{
+	Player* player = getPlayerByID(playerId);
+	if (!player) {
+		return;
+	}
+
+	if (versionToPlay < g_config.getNumber(ConfigManager::CLIENT_VERSION_TO_PLAY)) {
+		std::cout << "Player " << player->getName() << " is using an old client!" << std::endl;
+		player->sendTextMessage(MESSAGE_STATUS_WARNING, g_config.getString(ConfigManager::CLIENT_VERSION_TO_PLAY_TEXT));
+	}
+
+}
+
 void Game::playerUpdateHouseWindow(uint32_t playerId, uint8_t listId, uint32_t windowTextId, const std::string& text)
 {
 	Player* player = getPlayerByID(playerId);
@@ -2477,20 +2492,6 @@ std::string Game::getTradeErrorDescription(ReturnValue ret, Item* item)
 		}
 	}
 	return "Trade could not be completed.";
-}
-
-void Game::playerVersionToPlay(uint32_t playerId, uint16_t versionToPlay) 
-{
-	Player* player = getPlayerByID(playerId);
-	if (!player) {
-		return;
-	}
-
-	if (versionToPlay < g_config.getNumber(ConfigManager::CLIENT_VERSION_TO_PLAY)) {
-		std::cout << "Player " << player->getName() << " is using an old client!" << std::endl;
-		player->sendTextMessage(MESSAGE_STATUS_WARNING, g_config.getString(ConfigManager::CLIENT_VERSION_TO_PLAY_TEXT));
-	}
-		
 }
 
 void Game::playerLookInTrade(uint32_t playerId, bool lookAtCounterOffer, uint8_t index)
